@@ -187,3 +187,53 @@ Notons enfin les deux fichiers de configuration ci-dessous :<br>
         </code>
    1. **apache2.conf** : configuration générale du serveur (timeout du serveur, utilisateur www-data, niveau de log, …)
    2. **ports.conf** : configuration de la liste des ports en écoute (80 et 443 par défaut)
+   
+## MODULE PHP
+Par défaut Debian 9 propose PHP 7.3.27 qui est une version assez ancienne. Voici comment faire pour avoir une version récente (la 7.4).
+* Pour vérifier la version 
+    <code>
+
+           php -v
+
+    </code>
+
+![php v](images/5.png)
+
+* Enfin installez les modules pour **Apache / MariaDB :**
+   <code>
+    <pre>
+            sudo apt install -y apache2 libapache2-mod-php
+            sudo apt install -y php7.4-mysql    
+    </pre>
+    </code>
+* Vérifiez que le module PHP est bien activé :
+  <code>
+    <pre>
+           sudo apache2ctl -M | grep php 
+    </pre>
+    </code>
+* Relancez votre serveur Apache pour prendre en compte ces modifications
+  <code>
+    <pre>
+          sudo systemctl restart apache2
+    </pre>
+    </code>
+* Vous pouvez vérifier par une simple page PHP, les informations relatives à votre serveur.
+
+    Editez la page PHP suivante :
+    <code>
+    <pre>
+          cd /var/www/html/
+          sudo vi getinfo.php
+    </pre>
+    </code>
+
+  * Et indiquez la commande :
+  <code>
+    <pre>
+          <?php phpinfo(); ?>
+    </pre>
+    </code>
+ * Vérifier avec http://152.228.217.119/getinfo.php
+
+![imag php](images/6.png)
