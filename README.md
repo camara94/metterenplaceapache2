@@ -239,4 +239,15 @@ Par défaut Debian 9 propose PHP 7.3.27 qui est une version assez ancienne. Voic
 ![imag php](images/6.png)
 
 ## Configuration de nom de domaine
-Je vais d'abord dans **OVH** notre hebergeur
+Je vais d'abord dans notre serveur **OVH** dans la section **Zone DNS**
+![ds](images/7.png)
+
+puis je clique sur le bouton **Ajouter une entrée**, je choisie champs de pointage <code>**A**</code> pour pouvoir ajouter l'adresse **IP4** de notre **VPS** dans sous-domaine je sais **www**
+![confirm](images/9.png)
+
+Et en je confirme 
+![confirm ](images/11.png) 
+après cette étape, vous pouvez voir que notre **stardevcgroup.com** pointe maintenant vers **152.228.217.119** pour vérifier il nous sufit de tester ces deux urls suivante
+* http://152.228.217.119
+* http://stardevcgroup.com<br>
+nous constatons directement que ces deux urls affiche le même résultat au navigateur
