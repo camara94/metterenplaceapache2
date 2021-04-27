@@ -111,35 +111,79 @@ Les fichiers de configuration de votre serveur se situent dans le répertoire  *
   2. conf-enabled : pour fichiers de configuration des **services** disponibles
   3. sites-enabled : pour les fichiers de configuration des **sites** disponibles
    
->**Note** : ces répertoires sont en fait des liens symboliques vers les répertoires physiques  **mods-available**, **conf-available** et **sites-available**.
+>**Note** : ces répertoires sont en fait des liens symboliques vers >les répertoires physiques  **mods-available**, **conf-available** >et **sites-available**.
 
 Il y aura au minimum autant de fichiers de configuration dans **sites-enabled** que de sites proposés.
 
-Au départ il y a un seul site avec les fichiers suivants :<br>
+* Au départ il y a un seul site avec les fichiers suivants :<br>
 
-<code>
-    <pre>
-        /etc/apache2/ 
-            |-- sites-enabled
-                |-- 000-default.conf
-                |-- default-ssl.conf
-    </pre>
- </code>
+        <code>
+            <pre>
+                /etc/apache2/ 
+                    |-- sites-enabled
+                        |-- 000-default.conf
+                        |-- default-ssl.conf
+            </pre>
+        </code>
 
-1. **000-default.conf** : configuration utilisée par le mode HTTP (port 80)
-2. **default-ssl.conf** : configuration utilisée par le mode HTTPS (port 443)
+  1. **000-default.conf** : configuration utilisée par le mode HTTP (port 80)
+  2. **default-ssl.conf** : configuration utilisée par le mode HTTPS (port 443)
 
-Le contenu de la configuration HTTP est la suivante :
+* Le contenu de la configuration HTTP est la suivante :
 
-<code>
-    <pre>
-       &lt;VirtualHost *:80&gt;
-            ServerAdmin webmaster@localhost
-            DocumentRoot /var/www/html
-            ErrorLog ${APACHE_LOG_DIR}/error.log
-            CustomLog ${APACHE_LOG_DIR}/access.log combined
-        &lt;/VirtualHost&gt;
-    </pre>
- </code>
+    <code>
+        <pre>
+        &lt;VirtualHost *:80&gt;
+                ServerAdmin webmaster@localhost
+                DocumentRoot /var/www/html
+                ErrorLog ${APACHE_LOG_DIR}/error.log
+                CustomLog ${APACHE_LOG_DIR}/access.log combined
+            &lt;/VirtualHost&gt;
+        </pre>
+    </code>
 
+    1. La balise <code>VirtualHost</code> permet de définir un hôte virtuel qui écoutera sur le port **80 (HTTP)**.
 
+    2. <code>DocumentRoot</code> indique le chemin des pages web qui seront accessibles sur le serveur : **/var/www/html**
+
+* Apache recommande de créer un fichier de configuration pour chaque hôte virtuel ou application web dans le répertoire **/etc/apache2/sites-available/**
+
+    pondant à « 000-default.conf » via les commandes **a2ensite (enable site)** et **a2dissite (disable site)** :<br>
+        <code>
+            <pre>
+                sudo a2ensite 000-default
+                sudo a2dissite 000-default
+            </pre>
+        </code>
+ * De même nous pouvons **activer / désactiver** la configuration correspondant par exemple à  **charset.conf** en tapant :<br>
+        <code>
+            <pre>
+                sudo a2enconf charset
+                sudo a2disconf charset
+            </pre>
+        </code>
+
+ * Et enfin, nous pouvons **activer / désactiver** le module correspondant par exemple à  **alias.load**
+        <code>
+            <pre>
+                sudo a2enmod alias
+                sudo a2dismod alias
+            </pre>
+        </code>
+
+ * Chaque modification nécessitera une prise en compte des changements via la commande suivante :<br>
+        <code>
+            <pre>
+                sudo systemctl reload apache2
+            </pre>
+        </code>
+Notons enfin les deux fichiers de configuration ci-dessous :<br>
+        <code>
+            <pre>
+                /etc/apache2/ 
+                    |-- apache2.conf
+                    |-- ports.conf
+            </pre>
+        </code>
+   1. **apache2.conf** : configuration générale du serveur (timeout du serveur, utilisateur www-data, niveau de log, …)
+   2. **ports.conf** : configuration de la liste des ports en écoute (80 et 443 par défaut)
