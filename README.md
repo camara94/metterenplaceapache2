@@ -94,6 +94,52 @@ Pour avoir la doc, il faut l'installer à travers cette commande
     </pre>
  </code>
 
+ ## LA CONFIGURATION
+Les fichiers de configuration de votre serveur se situent dans le répertoire  **/etc/apache2**:
 
+<code>
+    <pre>
+        /etc/apache2/
+            |-- mods-enabled
+            |-- conf-enabled
+            |-- sites-enabled
+    </pre>
+ </code>
+
+* Trois dossiers sont disponibles:
+  1. **mods-enabled** : pour les fichiers de configuration des **modules** d’Apache 
+  2. conf-enabled : pour fichiers de configuration des **services** disponibles
+  3. sites-enabled : pour les fichiers de configuration des **sites** disponibles
+   
+>**Note** : ces répertoires sont en fait des liens symboliques vers les répertoires physiques  **mods-available**, **conf-available** et **sites-available**.
+
+Il y aura au minimum autant de fichiers de configuration dans **sites-enabled** que de sites proposés.
+
+Au départ il y a un seul site avec les fichiers suivants :<br>
+
+<code>
+    <pre>
+        /etc/apache2/ 
+            |-- sites-enabled
+                |-- 000-default.conf
+                |-- default-ssl.conf
+    </pre>
+ </code>
+
+1. **000-default.conf** : configuration utilisée par le mode HTTP (port 80)
+2. **default-ssl.conf** : configuration utilisée par le mode HTTPS (port 443)
+
+Le contenu de la configuration HTTP est la suivante :
+
+<code>
+    <pre>
+       &lt;VirtualHost *:80&gt;
+            ServerAdmin webmaster@localhost
+            DocumentRoot /var/www/html
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+        &lt;/VirtualHost&gt;
+    </pre>
+ </code>
 
 
