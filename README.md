@@ -231,9 +231,12 @@ Par défaut Debian 9 propose PHP 7.3.27 qui est une version assez ancienne. Voic
   * Et indiquez la commande :
   <code>
     <pre>
-          <?php phpinfo(); ?>
+        &lt;?php phpinfo(); ?&gt;
     </pre>
     </code>
  * Vérifier avec http://152.228.217.119/getinfo.php
 
 ![imag php](images/6.png)
+
+## Configuration de nom de domaine
+Je vais d'abord dans **OVH** notre hebergeur
