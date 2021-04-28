@@ -251,3 +251,14 @@ après cette étape, vous pouvez voir que notre **stardevcgroup.com** pointe mai
 * http://152.228.217.119
 * http://stardevcgroup.com<br>
 nous constatons directement que ces deux urls affiche le même résultat au navigateur
+
+## Création d'un hôte virtuel
+Pour cela nous allons maintenant acceder à notre **VPS** en **SSH**
+dans cet article j'ai choisir l'outil **MobaXterm** qui a une version gratuite qui fait notre affaire mais on pouvait choisir **Putty** qui est aussi intéressant.
+![mobaxterm](images/12.png)
+
+Pour ajouter session il suffit de cliquer sur **session** il vous sera demandé votre nom **d'hôte** et **username** puis lorsque vous cliquez sur **OK** il vous demande votre **mot de passe** enfin et lors de prochaine connexion vous n'aurez plus besoin de les retaper.
+![ll](images/13.png)
+Aperçu de **MobaXterm** une fois logged dans notre **VPS**
+![aper](images/14.png)
+
