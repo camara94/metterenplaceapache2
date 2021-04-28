@@ -261,4 +261,37 @@ Pour ajouter session il suffit de cliquer sur **session** il vous sera demandé 
 ![ll](images/13.png)
 Aperçu de **MobaXterm** une fois logged dans notre **VPS**
 ![aper](images/14.png)
+Après quelques manup j'obtiens ça qui n'est pas si mal
 
+![cxc](images/15.png)
+
+* On créer le dossier **stardevcgroup.com** qui va héberger les fichier de notre site
+  <code>
+  <pre>
+        cd /var/ww
+        mkdir stardevcgroup.com
+        cd stardevcgroup.com
+        touch index.html
+        nano index.html
+  </pre>
+  </code>
+
+  et puis je vais ajouter **Bienvenue sur Star Dev Cloud Group**
+
+  ![dd](images/16.png)
+
+  Pour activer notre site vers ce dossier, nous allons dans **/etc/apache2/sites-enabled** et l'interieur de ce dossier on créer un fichier **startdevcgroup.com.conf**
+  <code>
+  <pre>
+        cd /etc/apache2/enble-site
+        nano stardevcgroup.com
+  </pre>
+  </code>
+
+  ![star](images/17.png)
+  Dans ce fichier les deux qui sont essentielles sont:
+  * <code>**ServerName**</code> qui indique l'URL du site ou le nom de domaine
+  * <code>**DocumentRoot**</code> indique le dossier qui héberge notre site ou tout simplement la racine de notre site<br>
+  si vous voulez en savoir plus [Cliquez ici](https://github.com/camara94/AdministrationdunserveurLAMP#pour-la-cr%C3%A9ation-dun-h%C3%B4te-virtuel)
+
+  * Pour activer cette configuration <code>ap
