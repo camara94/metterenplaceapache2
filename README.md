@@ -1,4 +1,4 @@
-# metterenplaceapache2
+# Mettre en place apache2
 Dans ce projet, je vais illustrer l'installation d'apache sur notre serveur **VPS**, 
 ## INSTALLATION D’APACHE 2
 nous en profitons pour installer aussi le langage PHP et le module Apache associé :
@@ -10,11 +10,10 @@ nous en profitons pour installer aussi le langage PHP et le module Apache associ
     </pre>
 </code>
 
-Après avoir installé apache2 et PHP, nous le dossier **www** dans le dossier **var** qui va servir le container de nos site web
+Après avoir installé apache2 et PHP, nous allons dans le dossier **var** puis dans le dossier **www** qui va servir de container pour nos site web
 <code>
     <pre>
-        cd /var
-        mkdir www
+        cd /var/www
     </pre>
 </code>
 Attribuez à cet utilisateur les droits sur le dossier **/var/www**<br>
@@ -23,15 +22,17 @@ Attribuez à cet utilisateur les droits sur le dossier **/var/www**<br>
     sudo chown -R www-data:www-data /var/www
     </pre>
 </code>
-Pour vérifier le statut de votre serveur, lancez la commande suivante :
+Pour vérifier le statut de notre serveur, lançons la commande suivante :
 <code>
     <pre>
-        sudo service apache2 status
+        sudo service apache2 status 
+            oubien
+        sudo systemctl status apache2
     </pre>
 </code>
 Résultat:<br>
 ![resultat](images/1.png)
-qui montre que apache2 est installé et est lancé également, après cela je peux vérifier notre **adress ip** dans le navigateur
+qui montre que apache2 est installé et est lancé également, après cela nous pouvons vérifier notre **adress ip** dans le navigateur
 <code>
     <pre>
      http://152.228.217.119/
@@ -41,7 +42,7 @@ Aperçu: <br>
 ![apercu](images/2.png)
 Nous voyons ici que notre serveur Apache2 est bien démarré et, par défaut, il se relancera automatiquement à chaque démarrage de notre VPS.
 
-Pour avoir la doc, il faut l'installer à travers cette commande
+Pour avoir la doc, il faut l'installer l'utilitaire:
 <code>
     <pre>
         sudo apt-get install apache2-doc
@@ -67,7 +68,7 @@ Pour avoir la doc, il faut l'installer à travers cette commande
  * Pour arrêter, lancer ou relancer votre serveur:<br>
     <code>
     <pre>
-         sudo service apache2 stop
+        sudo service apache2 stop
         sudo service apache2 start
         sudo systemctl reload apache2
     </pre>
@@ -81,7 +82,7 @@ Pour avoir la doc, il faut l'installer à travers cette commande
  </code>
 
  ![ch](images/4.png)
- * Enfin si vous ne souhaitez pas redémarrer Apache2 au démarrage de votre VPS :<br>
+ * Enfin si nous ne souhaitons pas redémarrer Apache2 au démarrage de votre VPS :<br>
   <code>
     <pre>
         sudo systemctl disable apache2
@@ -95,7 +96,7 @@ Pour avoir la doc, il faut l'installer à travers cette commande
  </code>
 
  ## LA CONFIGURATION
-Les fichiers de configuration de votre serveur se situent dans le répertoire  **/etc/apache2**:
+Les fichiers de configuration de notre serveur se situent dans le répertoire  **/etc/apache2**:
 
 <code>
     <pre>
@@ -108,10 +109,10 @@ Les fichiers de configuration de votre serveur se situent dans le répertoire  *
 
 * Trois dossiers sont disponibles:
   1. **mods-enabled** : pour les fichiers de configuration des **modules** d’Apache 
-  2. conf-enabled : pour fichiers de configuration des **services** disponibles
-  3. sites-enabled : pour les fichiers de configuration des **sites** disponibles
+  2. **conf-enabled** : pour fichiers de configuration des **services** disponibles
+  3. **sites-enabled** : pour les fichiers de configuration des **sites** disponibles
    
->**Note** : ces répertoires sont en fait des liens symboliques vers >les répertoires physiques  **mods-available**, **conf-available** >et **sites-available**.
+>**Note** : ces répertoires sont en fait des liens symboliques vers ->les répertoires physiques  **mods-available**, **conf-available** >et **sites-available**.
 
 Il y aura au minimum autant de fichiers de configuration dans **sites-enabled** que de sites proposés.
 
@@ -132,23 +133,22 @@ Il y aura au minimum autant de fichiers de configuration dans **sites-enabled** 
 * Le contenu de la configuration HTTP est la suivante :
 
     <code>
-        <pre>
+    <pre>
         &lt;VirtualHost *:80&gt;
                 ServerAdmin webmaster@localhost
                 DocumentRoot /var/www/html
                 ErrorLog ${APACHE_LOG_DIR}/error.log
                 CustomLog ${APACHE_LOG_DIR}/access.log combined
-            &lt;/VirtualHost&gt;
-        </pre>
+        &lt;/VirtualHost&gt;
+    </pre>
     </code>
 
     1. La balise <code>VirtualHost</code> permet de définir un hôte virtuel qui écoutera sur le port **80 (HTTP)**.
 
     2. <code>DocumentRoot</code> indique le chemin des pages web qui seront accessibles sur le serveur : **/var/www/html**
 
-* Apache recommande de créer un fichier de configuration pour chaque hôte virtuel ou application web dans le répertoire **/etc/apache2/sites-available/**
-
-    pondant à « 000-default.conf » via les commandes **a2ensite (enable site)** et **a2dissite (disable site)** :<br>
+* Apache recommande de créer un fichier de configuration pour chaque hôte virtuel ou application web dans le répertoire **/etc/apache2/sites-available/** 
+* correspondant à **«000-default.conf»** via les commandes, nous pouvons l'activer et le desactiver **a2ensite (enable site)** et **a2dissite (disable site)**:<br>
         <code>
             <pre>
                 sudo a2ensite 000-default
@@ -189,36 +189,34 @@ Notons enfin les deux fichiers de configuration ci-dessous :<br>
    2. **ports.conf** : configuration de la liste des ports en écoute (80 et 443 par défaut)
    
 ## MODULE PHP
-Par défaut Debian 9 propose PHP 7.3.27 qui est une version assez ancienne. Voici comment faire pour avoir une version récente (la 7.4).
+Par défaut ubuntu 18.04 TLS propose PHP 7.2.24 qui est une version assez ancienne. Voici comment faire pour avoir une version récente (la 7.4).
 * Pour vérifier la version 
     <code>
-
            php -v
-
     </code>
 
 ![php v](images/5.png)
 
-* Enfin installez les modules pour **Apache / MariaDB :**
+* Enfin installons les modules pour **Apache / MariaDB :**
    <code>
     <pre>
             sudo apt install -y apache2 libapache2-mod-php
             sudo apt install -y php7.4-mysql    
     </pre>
     </code>
-* Vérifiez que le module PHP est bien activé :
+* Vérifions que le module PHP est bien activé :
   <code>
     <pre>
            sudo apache2ctl -M | grep php 
     </pre>
     </code>
-* Relancez votre serveur Apache pour prendre en compte ces modifications
+* Relançons notre serveur Apache pour prendre en compte ces modifications
   <code>
     <pre>
           sudo systemctl restart apache2
     </pre>
     </code>
-* Vous pouvez vérifier par une simple page PHP, les informations relatives à votre serveur.
+* Nous pouvons vérifier par une simple page PHP, les informations relatives à votre serveur.
 
     Editez la page PHP suivante :
     <code>
@@ -247,7 +245,7 @@ puis je clique sur le bouton **Ajouter une entrée**, je choisie champs de point
 
 Et en je confirme 
 ![confirm ](images/11.png) 
-après cette étape, vous pouvez voir que notre **stardevcgroup.com** pointe maintenant vers **152.228.217.119** pour vérifier il nous sufit de tester ces deux urls suivante
+après cette étape, nous pouvons voir que notre site **stardevcgroup.com** pointe maintenant vers **152.228.217.119** pour vérifier il nous sufit de tester ces deux urls suivante
 * http://152.228.217.119
 * http://stardevcgroup.com<br>
 nous constatons directement que ces deux urls affiche le même résultat au navigateur
@@ -257,7 +255,7 @@ Pour cela nous allons maintenant acceder à notre **VPS** en **SSH**
 dans cet article j'ai choisir l'outil **MobaXterm** qui a une version gratuite qui fait notre affaire mais on pouvait choisir **Putty** qui est aussi intéressant.
 ![mobaxterm](images/12.png)
 
-Pour ajouter session il suffit de cliquer sur **session** il vous sera demandé votre nom **d'hôte** et **username** puis lorsque vous cliquez sur **OK** il vous demande votre **mot de passe** enfin et lors de prochaine connexion vous n'aurez plus besoin de les retaper.
+Pour ajouter session il suffit de cliquer sur **session** il nous sera demandé votre nom **d'hôte** et **username** puis lorsque nous cliquons sur **OK** il nous demande votre **mot de passe** enfin et lors de prochaine connexion nous n'aurons plus besoin de les retaper.
 ![ll](images/13.png)
 Aperçu de **MobaXterm** une fois logged dans notre **VPS**
 ![aper](images/14.png)
@@ -283,7 +281,7 @@ Après quelques manup j'obtiens ça qui n'est pas si mal
   Pour activer notre site vers ce dossier, nous allons dans **/etc/apache2/sites-enabled** et l'interieur de ce dossier on créer un fichier **startdevcgroup.com.conf**
   <code>
   <pre>
-        cd /etc/apache2/enble-site
+        cd /etc/apache2/sites-enable
         nano stardevcgroup.com
   </pre>
   </code>
